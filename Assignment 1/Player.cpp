@@ -6,16 +6,14 @@
          * @param inventory A const ref. to an Inventory to copy and setup a Player's inventory_ member
          *      If none provided, default value of a default constructed Inventory
          */
-        Player::Player(const std::string& name, const Inventory& inventory = Inventory()){
+        Player::Player(const std::string& name, const Inventory& inventory = Inventory()) : name_(name), inventory_(inventory){}
 
-        }
-        
         /**
          * @brief Gets the name of the Player
          * @return The string value stored in name
          */
         std::string Player::getName() const{
-
+          return name_;
         }
 
         /**
@@ -25,7 +23,8 @@
          *  is NOT declared const.
          */
         Inventory& Player::getInventoryRef(){
-
+          Inventory& ref = inventory_;
+          return ref;
         }
         
        /**
@@ -55,7 +54,7 @@
          * re-allocating and copying the Inventory and ID.
          */
         Player& Player::operator=(const Player& rhs){
-
+          
         }
 
         /**

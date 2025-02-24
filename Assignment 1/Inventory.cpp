@@ -2,6 +2,31 @@
 
 /**
    
+ /**
+         * @brief Constructor with optional parameters for initialization.
+         * @param items A const reference to a 2D vector of items. 
+         *  Defaults to a 10x10 grid of default-constructed items, if none provided.
+         * @param equipped A pointer to an Item object. 
+         *  Defaults to nullptr, if none provided.
+         * 
+         * @post Initializes members in the following way:
+         * 1) Initializes `weight_` as the total weight of all items in `items` (excluding NONE type) 
+         * 2) Initialies `item_count_` as the count of non-NONE items. 
+         * 
+         * NOTE: The `equipped` item is excluded from these calculations.
+         */
+        Inventory::Inventory(const std::vector<std::vector<Item>>& items = std::vector(10, std::vector<Item>(10, Item{})),Item* equipped = nullptr):inventory_grid_(items), equipped_(equipped){
+            weight_ = 0;
+            item_count_ = 0;
+            for(int i = 0; i < items.size(); i++){
+                for(auto j = items[i].size(); j < items[i].size(); j++){
+                    weight_ += items[i][j].weight_;
+                    if(items[i][j].type_ != 0){
+                        item_count_++;
+                    }
+                }
+            }
+        }
 
         /** 
          * @brief Retrieves the value stored in `equipped_`
@@ -27,7 +52,8 @@
          * and sets `equipped` to nullptr, if `equipped` is not nullptr already.
          */
         void Inventory::discardEquipped(){
-            //to-do
+            delete equipped_;
+            equipped_ = nullptr;
         }
 
         /** 
@@ -105,7 +131,7 @@
          *  allocated item in `equipped`.
          */
         Inventory::Inventory(const Inventory& rhs){
-
+            
         }
 
         /**
