@@ -20,9 +20,9 @@
             item_count_ = 0;
             for(int i = 0; i < items.size(); i++){
                 for(auto j = items[i].size(); j < items[i].size(); j++){
-                    weight_ += items[i][j].weight_;
                     if(items[i][j].type_ != 0){
                         item_count_++;
+                        weight_ += items[i][j].weight_;
                     }
                 }
             }
@@ -130,8 +130,8 @@
          *  including duplicating the dynamically 
          *  allocated item in `equipped`.
          */
-        Inventory::Inventory(const Inventory& rhs){
-            
+        Inventory::Inventory(const Inventory& rhs): inventory_grid_(rhs.inventory_grid_), equipped_(rhs.equipped_), weight_(rhs.weight_), item_count_(rhs.item_count_){
+
         }
 
         /**
@@ -145,9 +145,17 @@
          * - All numerical values are set to 0
          * - All containers are cleared to have size 0
          */
-        Inventory::Inventory(Inventory&& rhs){
+        Inventory::Inventory(Inventory&& rhs): inventory_grid_(std::move(rhs.inventory_grid_)), equipped_(std::move(rhs.equipped_)), weight_(std::move(rhs.weight_)), item_count_(std::move(rhs.item_count_)){
+            rhs.equipped_ = nullptr;
+            weight_ = 0;
+            item_count_ = 0;
+            // for(int i  = 0; i < inventory_grid_.size(); i++){
+            //     for(int j = 0; j < inventory_grid_[i].size(); j++){
 
+            //     }
+            // }
         }
+
 
 
         /**
@@ -161,7 +169,10 @@
          * should be destroyed.
          */
         Inventory& Inventory::operator=(const Inventory& rhs){
-            
+            inventory_grid_ = rhs.inventory_grid_;
+            equipped_ = rhs.equipped_;
+            weight_= rhs.weight_;
+            item_count_ = rhs.item_count_;
         }
 
         /**
@@ -180,7 +191,13 @@
          * should be destroyed.
          */
         Inventory& Inventory::operator=(Inventory&& rhs){
-
+            inventory_grid_ = std::move( rhs.inventory_grid_);
+            equipped_ = std::move( rhs.equipped_);
+            weight_= std::move(rhs.weight_);
+            item_count_ = std::move(rhs.item_count_);
+            rhs.equipped_ = nullptr;
+            weight_ = 0;
+            item_count_ = 0;
         }
 
         /**
