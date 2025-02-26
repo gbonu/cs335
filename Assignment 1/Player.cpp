@@ -32,8 +32,7 @@
          * @param rhs A const l-value ref. to the Player object to copy.
          * @post Creates a deep copy of `rhs`
          */
-        Player::Player(const Player& rhs){
-
+        Player::Player(const Player& rhs): name_(rhs.name_), inventory_(rhs.inventory_){  
         }
         
          /**
@@ -42,8 +41,7 @@
          * @post Transfers ownership of resources from `rhs`
          * to the newly constructed Player object *using move semantics*
          */
-        Player::Player(Player&& rhs){
-
+        Player::Player(Player&& rhs) : name_(std::move(rhs.name_)), inventory_(std::move(rhs.inventory_)){
         }
 
         /**
@@ -54,7 +52,12 @@
          * re-allocating and copying the Inventory and ID.
          */
         Player& Player::operator=(const Player& rhs){
-          
+          // if (this != &rhs)
+          // {
+            name_ = rhs.name_;
+            inventory_ = rhs.inventory_;
+          // }
+          return *this; 
         }
 
         /**
@@ -65,7 +68,10 @@
          * to the updated Player object *using move semantics*
          */
         Player& Player::operator=(Player&& rhs){
-
+          //if(this != &rhs){
+          name_ = std::move(rhs.name_);
+          inventory_ = std::move(rhs.inventory_);
+          //}
         }
         
 
